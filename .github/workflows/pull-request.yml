@@ -124,6 +124,7 @@ jobs:
       uses: bridgecrewio/checkov-action@master
       with:
         directory: .
+        skip_check: CKV_GCP_27,CKV_GCP_49,CKV2_GCP_5
         quiet: true # optional: display only failed checks
         soft_fail: false # optional: do not return an error code if there are failed checks
         framework: terraform # optional: run only on a specific infrastructure {cloudformation,terraform,kubernetes,all}
