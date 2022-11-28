@@ -2,7 +2,7 @@ name: Pull request workflow2
 
 on:
   pull_request:
-    branches: [master]
+    branches: [testtt]
     
 jobs:
   myjobtest1:
