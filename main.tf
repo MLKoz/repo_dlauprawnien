@@ -1,11 +1,11 @@
 resource "google_storage_bucket" "tbd-staging-bucket" {
-  versioning {
-      enabled = true
-  }
   name                        = "${var.project_name}-staging"
   location                    = var.region
   uniform_bucket_level_access = false #tfsec:ignore:google-storage-enable-ubla
   force_destroy               = true
+  versioning {
+      enabled = true
+    }
   #checkov:skip=CKV_GCP_62: "Bucket should log access"
   #checkov:skip=CKV_GCP_29: "Ensure that Cloud Storage buckets have uniform bucket-level access enabled"
 }
