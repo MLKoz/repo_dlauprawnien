@@ -9,5 +9,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: step 1
-        if: github.ref == 'refs/heads/dev' || github.event.pull_request.base.ref == 'dev'
-        run: echo "Hello develop"
+        run: echo github.ref
+        run: echo github.event.pull_request.base.ref
