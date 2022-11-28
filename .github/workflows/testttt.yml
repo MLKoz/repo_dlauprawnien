@@ -3,11 +3,15 @@ name: Pull request workflow2
 on:
   pull_request:
     branches: [testtt]
-    types: [closed]
+    
+    
 jobs:
-    myjobtest1:
-    steps: 
-     - name: step 1
-       if: github.event.pull_request.merged == true 
-       run: echo "gitara gra"
+  myjobtest1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: step 1
+        if: github.head_ref == 'dev'
+        run: echo "gitara gra"
+      # if: github.event.pull_request.merged == true
+       #run: echo "gitara gra"
   
