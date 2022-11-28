@@ -1,0 +1,13 @@
+name: Pull request workflow2
+
+on:
+  pull_request:
+    branches: [testtt]
+    
+jobs:
+  myjobtest1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: step 1
+        if: github.ref == 'refs/heads/dev' || github.event.pull_request.base.ref == 'dev'
+        run: echo "Hello develop"
