@@ -6,9 +6,9 @@ on:
     types: [closed]
 jobs:
     myjobtest1:
-    if: github.event.pull_request.merged == true
     steps: 
      - name: step 1
        if: github.head_ref == 'dev'
+       if: github.event.pull_request.merged == true
        run: echo "gitara gra"
   
