@@ -4,7 +4,6 @@ on:
   pull_request:
     branches: [testtt]
     
-    
 jobs:
   myjobtest1:
     runs-on: ubuntu-latest
