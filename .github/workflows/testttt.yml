@@ -2,12 +2,12 @@ name: Pull request workflow2
 
 on:
   pull_request:
-    branches: [testtt]
+    branches: [master]
     
 jobs:
   myjobtest1:
     runs-on: ubuntu-latest
-    if: github.head_ref == 'dev'
     steps:
       - name: step 1
+        if: github.head_ref == 'dev'
         run: echo "gitara gra"
