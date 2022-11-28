@@ -8,7 +8,6 @@ jobs:
     myjobtest1:
     steps: 
      - name: step 1
-       if: github.head_ref == 'dev'
-       if: github.event.pull_request.merged == true
+       if: github.event.pull_request.merged == true 
        run: echo "gitara gra"
   
