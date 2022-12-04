@@ -3,6 +3,7 @@ resource "google_storage_bucket" "tbd-staging-bucket" {
   location                    = var.region
   uniform_bucket_level_access = false #tfsec:ignore:google-storage-enable-ubla
   force_destroy               = true
+  
   #checkov:skip=CKV_GCP_62: "Bucket should log access"
   #checkov:skip=CKV_GCP_29: "Ensure that Cloud Storage buckets have uniform bucket-level access enabled"
 }
@@ -128,4 +129,61 @@ resource "google_storage_bucket_object" "pyspark_k8s_job_file" {
 
 resource "kubectl_manifest" "pypsark_k8s_manifest" {
   yaml_body = data.template_file.pypsark_k8s_deployment.rendered
+}
+
+####### Dodanie budżetu wykorzystując terraform
+data "google_billing_account" "account" {
+  billing_account = var.billing_account
+}
+
+
+data "google_project" "project" {
+}
+
+resource "google_billing_budget" "budget" {
+  billing_account = data.google_billing_account.account.id
+  display_name    = "gcp_project2"
+
+  budget_filter {
+    projects = ["projects/${data.google_project.project.number}"]
+    credit_types_treatment = "EXCLUDE_ALL_CREDITS"
+  }
+
+  amount {
+    specified_amount {
+      currency_code = "USD"
+      units         = "50"
+    }
+  }
+  
+
+  threshold_rules {
+    threshold_percent = 0.5
+  }
+
+  threshold_rules {
+    threshold_percent = 0.8
+  }
+
+   threshold_rules {
+    threshold_percent = 1.0
+  }
+
+  all_updates_rule {
+    monitoring_notification_channels = [
+      google_monitoring_notification_channel.notification_channel.id,
+    ]
+    disable_default_iam_recipients = false
+    schema_version = 1
+
+  }
+}
+
+resource "google_monitoring_notification_channel" "notification_channel" {
+  display_name = "Example Notification Channel"
+  type         = "email"
+
+  labels = {
+    email_address = "michaldao53@gmail.com"
+  }
 }
